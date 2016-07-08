@@ -22,7 +22,7 @@ module mesh_module
 		
 	real(dp),    allocatable :: xgeom(:,:)
 	
-	real(dp) :: mode_tetra(3,64)
+	real(dp) :: mode_tetra(3,56)
 	real(dp) :: mode_pyr(3,14)
 	real(dp) :: mode_prism(3,18)
 	real(dp) :: mode_hex(3,125)
