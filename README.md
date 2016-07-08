@@ -19,7 +19,7 @@ Some features include:
 
 How to use:
 
-1) install metis first
+1) install metis first http://glaros.dtc.umn.edu/gkhome/metis/metis/download
 
 2) modify makeall.sh to use your libmetis.a static library
 
