@@ -52,11 +52,8 @@ program main
         else if (arg(252:255) == '.msh') then
             inputfile = adjustl(arg)  
             mesh_type = 3
-			end if
+	end if
         
-         
-    
-
     end do
 
     call go(inputfile,partition_flag,mesh_type)
@@ -87,7 +84,7 @@ subroutine go(inputfile,nparts,mesh_type)
 
 !    if(num_proc /= nparts) then
 !    	print*,'ahh partitions do not match mpi ranks'
-!	end if   
+!	 end if   
 	
 #else
 	rank = 0
