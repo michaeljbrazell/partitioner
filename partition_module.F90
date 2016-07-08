@@ -929,6 +929,8 @@ module partition_module
 	end if   
 	
 	if(ncell_type_real(5) > 0) then
+		print*,'ahh not working yet abort'
+		stop
 		tm  = (pdegree+1)*(pdegree+2)*(2*pdegree+3)/6
 		write(unitnum) (mode_pyr(1,j),j=1,tm)     !xi
 		write(unitnum) (mode_pyr(2,j),j=1,tm)     !eta
@@ -937,6 +939,8 @@ module partition_module
 	end if
 	
 	if(ncell_type_real(6) > 0) then
+		print*,'ahh not working yet abort'
+		stop
 		tm = (pdegree+1)*(pdegree+1)*(pdegree+2)/2
 		write(unitnum) (mode_prism(1,j),j=1,tm)     !xi
 		write(unitnum) (mode_prism(2,j),j=1,tm)     !eta
@@ -945,6 +949,8 @@ module partition_module
 	end if
 	
 	if(ncell_type_real(7) > 0) then
+		print*,'ahh not working yet abort'
+		stop
 		tm = (pdegree+1)*(pdegree+1)*(pdegree+1)
 		write(unitnum) (mode_hex(1,j),j=1,tm)     !xi
 		write(unitnum) (mode_hex(2,j),j=1,tm)     !eta
