@@ -235,8 +235,6 @@ module partition_module
 		integer(i4) :: proc_recv_reorder(nparts)
 		integer(i4) :: proc_send_reorder(nparts)
 		
-		real(dp) :: mode_tetra(3,10) ! move this to mesh module eventuall
-		
 		character(len=255) :: part_string,nparts_string,filename
 		logical :: file_exists
 		
@@ -684,56 +682,7 @@ module partition_module
 			ind = ind + part_face_procs(n)
 			
 		end do
-			
-			
-			
-			! old you should delete
-			
-					! now that things are allocated fill in ilocal storage
-!		cell_tag(:) = 0
-!		ind = 0
-!		do i=1,npart_face
-!		
-!			el = face2cell(1,part_face_tag(i))
-!			pl = cell_partition(el)
-!			er = face2cell(2,part_face_tag(i))
-!			pr = cell_partition(er)
-!			
-!			if(pl == part) then
-!			
-!				if(cell_tag(er) == 0) then
-!					cell_tag(er) = 1				
-!					mpi_cell%ilocal_recv(proc_recv(proc_recv_reorder(pr))) = cell_ghost_g2l(er)				
-!					proc_recv(proc_recv_reorder(pr)) = proc_recv(proc_recv_reorder(pr)) + 1
-!				end if
-!				
-!				if(cell_tag(el) == 0) then
-!					cell_tag(el) = 1
-!					mpi_cell%ilocal_send(proc_send(proc_send_reorder(pr))) = cell_g2l(el)					
-!					proc_send(proc_send_reorder(pr)) = proc_send(proc_send_reorder(pr)) + 1	
-!				end if
-!
-!				
-!			else
-!			
-!				if(cell_tag(el) == 0) then
-!					cell_tag(el) = 1
-!					mpi_cell%ilocal_recv(proc_recv(proc_recv_reorder(pl))) = cell_ghost_g2l(el)				
-!					proc_recv(proc_recv_reorder(pl)) = proc_recv(proc_recv_reorder(pl)) + 1			
-!				end if
-!				
-!				if(cell_tag(er) == 0) then
-!					cell_tag(er) = 1
-!					mpi_cell%ilocal_send(proc_send(proc_send_reorder(pl))) = cell_g2l(er)					
-!					proc_send(proc_send_reorder(pl)) = proc_send(proc_send_reorder(pl)) + 1	
-!				end if
-!			end if			
-!			
-!		end do
-
-
-			
-			
+		
 		do i=1,mpi_cell%nbuff_send
 			if(mpi_cell%ilocal_send(i) > ncell_real) then
 				print*,' something wrong with ilocal send, too big'
@@ -881,9 +830,9 @@ module partition_module
 			return
 		end if
 		
-    if(pdegree > 2) then
-    	print*,'ahh not tested for high p, aborting'
-    	stop
+		if(pdegree > 2) then
+			print*,'ahh not tested for high p, aborting'
+			stop
 		end if
 		
 		node_g2l(:) = 0	
@@ -922,39 +871,48 @@ module partition_module
 		end do
 		
 		
-		filename = 'part.'//trim(adjustl(nparts_string))//'/curved_cell.'//trim(adjustl(part_string))
-		open (unit=unitnum,file=filename, form='unformatted',convert='big_endian')
-		write(unitnum) pdegree,nnodes_real,ncell_type_real(4),ncell_type_real(5),ncell_type_real(6),ncell_type_real(7)
-		write(unitnum) (xgeom(1,node_l2g(i)),i=1,nnodes_real)
+	filename = 'part.'//trim(adjustl(nparts_string))//'/curved_cell.'//trim(adjustl(part_string))
+	
+	open (unit=unitnum,file=filename, form='unformatted',convert='big_endian')
+	
+	write(unitnum) pdegree,nnodes_real,ncell_type_real(4),ncell_type_real(5),ncell_type_real(6),ncell_type_real(7)
+	
+	write(unitnum) (xgeom(1,node_l2g(i)),i=1,nnodes_real)
     write(unitnum) (xgeom(2,node_l2g(i)),i=1,nnodes_real)
     write(unitnum) (xgeom(3,node_l2g(i)),i=1,nnodes_real)
     
+    ! always contains p1 vertex 
     mode_tetra(1,1) = -1.0_dp
     mode_tetra(1,2) =  1.0_dp
     mode_tetra(1,3) = -1.0_dp
     mode_tetra(1,4) = -1.0_dp
+    
+    mode_tetra(2,1) = -1.0_dp
+    mode_tetra(2,2) = -1.0_dp
+    mode_tetra(2,3) =  1.0_dp
+    mode_tetra(2,4) = -1.0_dp
+    
+    mode_tetra(3,1) = -1.0_dp
+    mode_tetra(3,2) = -1.0_dp
+    mode_tetra(3,3) = -1.0_dp
+    mode_tetra(3,4) =  1.0_dp
+    
+    
+    ! p=2 middle of edges
     mode_tetra(1,5) =  0.0_dp
     mode_tetra(1,6) =  0.0_dp
     mode_tetra(1,7) = -1.0_dp
     mode_tetra(1,8) = -1.0_dp
     mode_tetra(1,9) = -1.0_dp
     mode_tetra(1,10) = 0.0_dp
-    
-    mode_tetra(2,1) = -1.0_dp
-    mode_tetra(2,2) = -1.0_dp
-    mode_tetra(2,3) =  1.0_dp
-    mode_tetra(2,4) = -1.0_dp
+  
     mode_tetra(2,5) = -1.0_dp
     mode_tetra(2,6) =  0.0_dp
     mode_tetra(2,7) =  0.0_dp
     mode_tetra(2,8) = -1.0_dp
     mode_tetra(2,9) =  0.0_dp
     mode_tetra(2,10) =-1.0_dp
-    
-    mode_tetra(3,1) = -1.0_dp
-    mode_tetra(3,2) = -1.0_dp
-    mode_tetra(3,3) = -1.0_dp
-    mode_tetra(3,4) =  1.0_dp
+   
     mode_tetra(3,5) = -1.0_dp
     mode_tetra(3,6) = -1.0_dp
     mode_tetra(3,7) = -1.0_dp
@@ -964,21 +922,40 @@ module partition_module
     
     if(ncell_type_real(4) > 0) then
     	tm = (pdegree+1)*(pdegree+2)*(pdegree+3)/6
-			write(unitnum) (mode_tetra(1,j),j=1,tm)     !xi
-			write(unitnum) (mode_tetra(2,j),j=1,tm)     !eta
-			write(unitnum) (mode_tetra(3,j),j=1,tm)     !zeta			
-			write(unitnum) ((node_g2l(cell_nodes(j,cell_real(i))),j=1,tm),i=1,ncell_type_real(4))
-		end if      
+		write(unitnum) (mode_tetra(1,j),j=1,tm)     !xi
+		write(unitnum) (mode_tetra(2,j),j=1,tm)     !eta
+		write(unitnum) (mode_tetra(3,j),j=1,tm)     !zeta			
+		write(unitnum) ((node_g2l(cell_nodes(j,cell_real(i))),j=1,tm),i=1,ncell_type_real(4))
+	end if   
+	
+	if(ncell_type_real(5) > 0) then
+		tm  = (pdegree+1)*(pdegree+2)*(2*pdegree+3)/6
+		write(unitnum) (mode_pyr(1,j),j=1,tm)     !xi
+		write(unitnum) (mode_pyr(2,j),j=1,tm)     !eta
+		write(unitnum) (mode_pyr(3,j),j=1,tm)     !zeta			
+		write(unitnum) ((node_g2l(cell_nodes(j,cell_real(i+ncell_type_real(4)))),j=1,tm),i=1,ncell_type_real(5))
+	end if
+	
+	if(ncell_type_real(6) > 0) then
+		tm = (pdegree+1)*(pdegree+1)*(pdegree+2)/2
+		write(unitnum) (mode_prism(1,j),j=1,tm)     !xi
+		write(unitnum) (mode_prism(2,j),j=1,tm)     !eta
+		write(unitnum) (mode_prism(3,j),j=1,tm)     !zeta			
+		write(unitnum) ((node_g2l(cell_nodes(j,cell_real(i+ncell_type_real(4)+ncell_type_real(5)))),j=1,tm),i=1,ncell_type_real(6))
+	end if
+	
+	if(ncell_type_real(7) > 0) then
+		tm = (pdegree+1)*(pdegree+1)*(pdegree+1)
+		write(unitnum) (mode_hex(1,j),j=1,tm)     !xi
+		write(unitnum) (mode_hex(2,j),j=1,tm)     !eta
+		write(unitnum) (mode_hex(3,j),j=1,tm)     !zeta			
+		write(unitnum) ((node_g2l(cell_nodes(j,cell_real(i+ncell_type_real(4)+ncell_type_real(5)+ncell_type_real(6)))),j=1,tm),i=1,ncell_type_real(7))
+	end if
+	
             
 		close(unitnum)
 		
-! 				do j=1,ncell_real
-! 			e = cell_real(j)
-! 			etype = cell_type(e)
-! 			do i=1,node_per_element(etype)
-! 				write(unitnum) node_g2l(cell_nodes(i,e))
-! 			end do
-! 		end do
+
 		
 		
 	end subroutine output_partition_mesh_file
