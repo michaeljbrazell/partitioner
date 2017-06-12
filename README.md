@@ -24,7 +24,11 @@ How to use:
 
 2) modify Makefile to use your libmetis.a static library
 
-3) mpirun -np 4 ./partitioner.mpi -p 16 ../hc_mixed_ph.1.l8.ugrid 
+3) type make
+
+4) mpirun -np 4 ./partitioner.mpi -p 16 ../hc_mixed_ph.1.l8.ugrid 
+
+5) number of ranks does not have to match number of partitions. In the above example 4 ranks are creating 16 partitions
 
 
 Limitations and things that are hard coded:
@@ -33,9 +37,11 @@ Limitations and things that are hard coded:
 
 2) if you want a partition for each cell then output cell_partition(cell_id) which is filled in after partition_mesh is called
 
-3) little/big endian is not specified because the TMR grid maker checks your system
+3) little/big endian is not specified because the TMR grid maker checks your system. Change this in load_mesh in two spots or compile with big/little endian option
 
 4) max lines and boundary_tag is hard coded into line_module.F90 
+
+5) lines from hemisphere cylinder grid maker are not used since lines are detected automatically for prisms and hexes. For a mesh with tetrahedral elements and lines this will need to be modified to use the lines output from TMR hemisphere cylinder grid maker.
 
 
 
