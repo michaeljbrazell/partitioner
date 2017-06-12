@@ -16,8 +16,8 @@ module line_module
         
     type(line_struct), allocatable :: line(:)  
    
-    integer(i4), parameter :: tag_boundary = -1
-    integer(i4), parameter :: max_line_length = 100
+    integer(i4), parameter :: tag_boundary = 1
+    integer(i4), parameter :: max_line_length = 10000000
     
     contains
     

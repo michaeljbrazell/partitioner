@@ -173,8 +173,8 @@ subroutine read_ugrid_mesh_header(filename)
 
     ! open mesh ugrid mesh file
     open (unit=inmesh,file=filename, form='unformatted',access="stream", &
-                                     status='unknown', iostat=os , &
-                                     convert='big_endian')
+                                     status='unknown', iostat=os)! , &
+                                     !convert='little_endian')
 
 
 
@@ -190,7 +190,7 @@ subroutine read_ugrid_mesh_header(filename)
 	print*,'nnodes',nnodes
 	print*,'ntri_bdry',ntri_bdry
 	print*,'nquad_bdry',nquad_bdry
-	print*,'npatch',npatch
+! 	print*,'npatch',npatch
     
     close(inmesh)
 
@@ -542,8 +542,8 @@ subroutine read_ugrid_mesh(filename)
 
     ! open mesh ugrid mesh file
     open (unit=inmesh,file=filename, form='unformatted',access="stream", &
-                                     status='unknown', iostat=os , &
-                                     convert='big_endian')
+                                     status='unknown', iostat=os) !, &
+                                     !convert='little_endian')
                                      
  	read(inmesh) nnodes,ntri_bdry,nquad_bdry,ntet,npyramid,nprism,nhex
 
