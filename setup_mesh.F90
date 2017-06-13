@@ -136,7 +136,7 @@ subroutine setup_face()
             face_type(nf) = ftype
             ! left cell connected to face
             face2cell(1,nf) = i
-			cell2face(j,i) = nf
+            cell2face(j,i) = nf
 
             ! fill in nodes for face nf            
             do k=1,node_per_element(ftype)
@@ -154,41 +154,41 @@ subroutine setup_face()
  
         end do
        
-       		
+       
         if(nf /= nface) then
             print*,'number of faces does not match',nf,nface
             stop
         end if
 
-     	
+     
     
 end subroutine
 
 
 subroutine setup_cell2cell()
 
-		use my_kinddefs
-		use mesh_module
-		use connection_module
-		implicit none
-		
-		integer(i4) :: i,j,etype,e1,e2,find
-        
-    	! fill in the cell2cell data structure    	
-      	do i=1,ncell
-      		etype = cell_type(i)
-      		do j=1,face_per_element(etype)
-      			find = cell2face(j,i) 
-      			e1 = face2cell(1,find)
-      			e2 = face2cell(2,find)
-      			if(i==e1) then
-      				cell2cell(j,i) = e2
-      			else if(i==e2) then
-      				cell2cell(j,i) = e1
-      			end if
-      		end do
-     	end do
-     	
+  use my_kinddefs
+  use mesh_module
+  use connection_module
+  implicit none
+  
+  integer(i4) :: i,j,etype,e1,e2,find
+      
+    ! fill in the cell2cell data structure    	
+      do i=1,ncell
+        etype = cell_type(i)
+        do j=1,face_per_element(etype)
+          find = cell2face(j,i) 
+          e1 = face2cell(1,find)
+          e2 = face2cell(2,find)
+          if(i==e1) then
+            cell2cell(j,i) = e2
+          else if(i==e2) then
+            cell2cell(j,i) = e1
+          end if
+        end do
+    end do
+    
 end subroutine setup_cell2cell
 
 

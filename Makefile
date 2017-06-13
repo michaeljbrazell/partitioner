@@ -1,7 +1,7 @@
 FC=mpif90
 CC=gcc
 
-FFLAGS=-O3 -c -ffree-line-length-none
+FFLAGS=-O3 -c -ffree-line-length-none -DUSE_MPI
 CFLAGS=-O3 -c -fPIC
 #CFLAGS= -c -g -O0 -Wall -fPIC
 

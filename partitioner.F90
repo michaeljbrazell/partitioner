@@ -52,7 +52,7 @@ program main
         else if (arg(252:255) == '.msh') then
             inputfile = adjustl(arg)  
             mesh_type = 3
-	end if
+  end if
         
     end do
 
@@ -63,7 +63,7 @@ program main
 end program
 
 
-subroutine go(inputfile,nparts,mesh_type)
+  subroutine go(inputfile,nparts,mesh_type)
 
     use my_kinddefs
     use line_module
@@ -77,7 +77,7 @@ subroutine go(inputfile,nparts,mesh_type)
     integer(i4), intent(in) :: mesh_type
     
 #ifdef USE_MPI  
-	integer(i4) :: mpi_ierr
+    integer(i4) :: mpi_ierr
     call MPI_INIT(mpi_ierr)    
     call MPI_COMM_RANK(MPI_COMM_WORLD, rank, mpi_ierr) 
     call MPI_COMM_SIZE(MPI_COMM_WORLD, num_proc, mpi_ierr)
@@ -87,34 +87,34 @@ subroutine go(inputfile,nparts,mesh_type)
 !	 end if   
 	
 #else
-	rank = 0
-	num_proc = 1 
+    rank = 0
+    num_proc = 1 
 #endif
 
    
     if(rank==0) then
-		print*,'loading mesh'
-		call load_mesh(inputfile,mesh_type)
-   
-		print*,'setting up mesh'
-		call setup_mesh()
-   
-		print*,'finding lines'
-		call setup_lines()    
-   
-		print*,'partitioning into ', nparts
-		call partition_mesh(nparts) 
-   
-	!    print*,'output mesh'
-	!    call output_mesh()
-   
-		print*,'global to local'
-		call setup_global_to_local(nparts)
-   
-		print*,'deallocate stuff'
-		call deallocate_lines()
-		call deallocate_cell2stuff()
-	end if
+      print*,'loading mesh'
+      call load_mesh(inputfile,mesh_type)
+ 
+      print*,'setting up mesh'
+      call setup_mesh()
+ 
+      print*,'finding lines'
+      call setup_lines()    
+ 
+      print*,'partitioning into ', nparts
+      call partition_mesh(nparts) 
+ 
+    !    print*,'output mesh'
+    !    call output_mesh()
+ 
+      print*,'global to local'
+      call setup_global_to_local(nparts)
+ 
+      print*,'deallocate stuff'
+      call deallocate_lines()
+      call deallocate_cell2stuff()
+    end if
     
     if(rank==0) print*,'mpi broadcast mesh'
     call mpi_broadcast_mesh()
@@ -124,8 +124,8 @@ subroutine go(inputfile,nparts,mesh_type)
     
 
 #ifdef USE_MPI  
-	call mpi_barrier(MPI_COMM_WORLD,mpi_ierr)
-	if(rank==0) print*,'done'
+    call mpi_barrier(MPI_COMM_WORLD,mpi_ierr)
+    if(rank==0) print*,'done'
     call MPI_FINALIZE(mpi_ierr)
 #else
     print*,'done'
