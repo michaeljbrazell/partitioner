@@ -112,6 +112,8 @@ module partition_module
       end do
     end do        
 
+    call write_cell_partition(ncell,cell_partition)
+    
     part_count(:) = 0
     do i=1,ncell
       part_count(cell_partition(i)) = part_count(cell_partition(i)) + 1
@@ -124,6 +126,25 @@ module partition_module
   
   end subroutine partition_mesh
 
+
+
+  subroutine write_cell_partition(ncell,cell_partition)
+  
+    integer(i4), intent(in) :: ncell
+    integer(i4), intent(in) :: cell_partition(:)
+    integer :: unitnum,i
+    
+    unitnum = 35
+
+    open (unit=unitnum,file="cell_partition.dat", form='unformatted')
+    
+    do i=1,ncell
+      write(unitnum,"(10I7)") cell_partition(i)
+    end do
+    
+    close(unitnum)
+    
+  end subroutine
 
 
   subroutine setup_global_to_local(nparts)

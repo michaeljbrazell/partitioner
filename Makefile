@@ -28,6 +28,7 @@ all: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
 	$(FC) $(OBJECTS) $(LDFLAGS) -o $@.mpi
+	rm *.o *.mod
 
 .SUFFIXES: .F90 .c .o
 
