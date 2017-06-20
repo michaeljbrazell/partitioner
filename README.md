@@ -35,13 +35,11 @@ Limitations and things that are hard coded:
 
 1) Outputs files for NSU3D mcell format only. 
 
-2) if you want a partition for each cell then output cell_partition(cell_id) which is filled in after partition_mesh is called
+2) little/big endian is not specified because the TMR grid maker checks your system. Change this in load_mesh in two spots or compile with big/little endian option
 
-3) little/big endian is not specified because the TMR grid maker checks your system. Change this in load_mesh in two spots or compile with big/little endian option
+3) max lines and boundary_tag is hard coded into line_module.F90 
 
-4) max lines and boundary_tag is hard coded into line_module.F90 
-
-5) lines from hemisphere cylinder grid maker are not used since lines are detected automatically for prisms and hexes. For a mesh with tetrahedral elements and lines this will need to be modified to use the lines output from TMR hemisphere cylinder grid maker.
+4) lines from hemisphere cylinder grid maker are not used since lines are detected automatically for prisms and hexes. For a mesh with tetrahedral elements and lines this will need to be modified to use the lines output from TMR hemisphere cylinder grid maker.
 
 
 
