@@ -846,7 +846,6 @@ module partition_module
   
     close(unitnum)
   
-    
     if(pdegree == 1) then
       return
     end if
@@ -868,12 +867,8 @@ module partition_module
         case(4)
           tm = (pdegree+1)*(pdegree+2)*(pdegree+3)/6
         case(5)
-          print*,'ahh not tested aborting'
-          stop
           tm = (pdegree+1)*(pdegree+2)*(2*pdegree+3)/6
         case(6)
-          print*,'ahh not tested aborting'
-          stop
           tm = (pdegree+1)*(pdegree+1)*(pdegree+2)/2
         case(7)
           print*,'ahh not tested aborting'
@@ -949,19 +944,125 @@ module partition_module
       write(unitnum) ((node_g2l(cell_nodes(j,cell_real(i))),j=1,tm),i=1,ncell_type_real(4))
     end if   
 
+    mode_pyr(1,1) = -1.0_dp
+    mode_pyr(1,2) = 1.0_dp
+    mode_pyr(1,3) = 1.0_dp
+    mode_pyr(1,4) = -1.0_dp
+    mode_pyr(1,5) = -1.0_dp
+    mode_pyr(1,6) = 0.0_dp
+    mode_pyr(1,7) = -1.0_dp
+    mode_pyr(1,8) = -1.0_dp
+    mode_pyr(1,9) = 1.0_dp
+    mode_pyr(1,10) = 0.0_dp
+    mode_pyr(1,11) = 0.0_dp
+    mode_pyr(1,12) = 0.0_dp
+    mode_pyr(1,13) = -1.0_dp
+    mode_pyr(1,14) = 0.0_dp
+
+    mode_pyr(2,1) = -1.0_dp
+    mode_pyr(2,2) = -1.0_dp
+    mode_pyr(2,3) = 1.0_dp
+    mode_pyr(2,4) = 1.0_dp
+    mode_pyr(2,5) = -1.0_dp
+    mode_pyr(2,6) = -1.0_dp
+    mode_pyr(2,7) = 0.0_dp
+    mode_pyr(2,8) = -1.0_dp
+    mode_pyr(2,9) = 0.0_dp
+    mode_pyr(2,10) = -1.0_dp
+    mode_pyr(2,11) = 1.0_dp
+    mode_pyr(2,12) = 0.0_dp
+    mode_pyr(2,13) = 0.0_dp
+    mode_pyr(2,14) = 0.0_dp
+
+    mode_pyr(3,1) = -1.0_dp
+    mode_pyr(3,2) = -1.0_dp
+    mode_pyr(3,3) = -1.0_dp
+    mode_pyr(3,4) = -1.0_dp
+    mode_pyr(3,5) = 1.0_dp
+    mode_pyr(3,6) = -1.0_dp
+    mode_pyr(3,7) = -1.0_dp
+    mode_pyr(3,8) = 0.0_dp
+    mode_pyr(3,9) = -1.0_dp
+    mode_pyr(3,10) = 0.0_dp
+    mode_pyr(3,11) = -1.0_dp
+    mode_pyr(3,12) = 0.0_dp
+    mode_pyr(3,13) = 0.0_dp
+    mode_pyr(3,14) = -1.0_dp
+
     if(ncell_type_real(5) > 0) then
-      print*,'ahh not working yet abort'
-      stop
       tm  = (pdegree+1)*(pdegree+2)*(2*pdegree+3)/6
       write(unitnum) (mode_pyr(1,j),j=1,tm)     !xi
       write(unitnum) (mode_pyr(2,j),j=1,tm)     !eta
       write(unitnum) (mode_pyr(3,j),j=1,tm)     !zeta			
       write(unitnum) ((node_g2l(cell_nodes(j,cell_real(i+ncell_type_real(4)))),j=1,tm),i=1,ncell_type_real(5))
+      print*, ((node_g2l(cell_nodes(j,cell_real(i+ncell_type_real(4)))),j=1,tm),i=1,ncell_type_real(5))
     end if
 
+    mode_prism(1,1) = -1.0_dp
+    mode_prism(1,2) = 1.0_dp
+    mode_prism(1,3) = -1.0_dp
+    mode_prism(1,4) = -1.0_dp
+    mode_prism(1,5) = 1.0_dp
+    mode_prism(1,6) = -1.0_dp
+    
+    mode_prism(1,7) = 0.0_dp
+    mode_prism(1,8) = -1.0_dp
+    mode_prism(1,9) = -1.0_dp
+    mode_prism(1,10) = 0.0_dp
+    mode_prism(1,11) = 1.0_dp
+    mode_prism(1,12) = -1.0_dp
+    mode_prism(1,13) = 0.0_dp
+    mode_prism(1,14) = -1.0_dp
+    mode_prism(1,15) = 0.0_dp
+    mode_prism(1,16) = 0.0_dp
+    mode_prism(1,17) = -1.0_dp
+    mode_prism(1,18) = 0.0_dp
+
+
+
+    mode_prism(2,1) = -1.0_dp
+    mode_prism(2,2) = -1.0_dp
+    mode_prism(2,3) = 1.0_dp
+    mode_prism(2,4) = -1.0_dp
+    mode_prism(2,5) = -1.0_dp
+    mode_prism(2,6) = 1.0_dp
+    
+    mode_prism(2,7) = -1.0_dp
+    mode_prism(2,8) = 0.0_dp
+    mode_prism(2,9) = -1.0_dp
+    mode_prism(2,10) = 0.0_dp
+    mode_prism(2,11) = -1.0_dp
+    mode_prism(2,12) = 1.0_dp
+    mode_prism(2,13) = -1.0_dp
+    mode_prism(2,14) = 0.0_dp
+    mode_prism(2,15) = 0.0_dp
+    mode_prism(2,16) = -1.0_dp
+    mode_prism(2,17) = 0.0_dp
+    mode_prism(2,18) = 0.0_dp
+
+
+
+    mode_prism(3,1) = -1.0_dp
+    mode_prism(3,2) = -1.0_dp
+    mode_prism(3,3) = -1.0_dp
+    mode_prism(3,4) = 1.0_dp
+    mode_prism(3,5) = 1.0_dp
+    mode_prism(3,6) = 1.0_dp
+    
+    mode_prism(3,7) = -1.0_dp
+    mode_prism(3,8) = -1.0_dp
+    mode_prism(3,9) = 0.0_dp
+    mode_prism(3,10) = -1.0_dp
+    mode_prism(3,11) = 0.0_dp
+    mode_prism(3,12) = 0.0_dp
+    mode_prism(3,13) = 1.0_dp
+    mode_prism(3,14) = 1.0_dp
+    mode_prism(3,15) = 1.0_dp
+    mode_prism(3,16) = 0.0_dp
+    mode_prism(3,17) = 0.0_dp
+    mode_prism(3,18) = 0.0_dp
+
     if(ncell_type_real(6) > 0) then
-      print*,'ahh not working yet abort'
-      stop
       tm = (pdegree+1)*(pdegree+1)*(pdegree+2)/2
       write(unitnum) (mode_prism(1,j),j=1,tm)     !xi
       write(unitnum) (mode_prism(2,j),j=1,tm)     !eta
