@@ -87,11 +87,19 @@ module line_module
             if(cell2face(4,e2) == f2) then
               f2 = cell2face(5,e2)
               e2 = cell2cell(5,e2)
-              etype2 = cell_type(e2)
+              if(e2 /= -1) then
+                etype2 = cell_type(e2)
+              else
+                etype2 = -1
+              end if
             else if(cell2face(5,e2) == f2) then
-                f2 = cell2face(4,e2)
-                e2 = cell2cell(4,e2)
-              etype2 = cell_type(e2)
+              f2 = cell2face(4,e2)
+              e2 = cell2cell(4,e2)
+              if(e2 /= -1) then
+                etype2 = cell_type(e2)
+              else 
+                etype2 = -1
+              end if
             end if
             
           end do
